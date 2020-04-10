@@ -1,0 +1,7 @@
+---
+- name: Copy App Files
+  synchronize:
+    src: '{{ app_src }}'
+    dest: '{{ app_dist }}'
+    use_ssh_args: yes
+  become: yes

@@ -1,0 +1,8 @@
+---
+- name: Run docker-compose
+  shell: "cd {{ compose_dir }} && sudo docker-compose up -d"
+  when: compose_status == "up"
+
+- name: Restart docker-compose
+  shell: "cd {{ compose_dir }} && sudo docker-compose restart"
+  when: compose_status == "restart"

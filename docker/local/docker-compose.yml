@@ -1,0 +1,17 @@
+version: "3.1"
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    container_name: ${APP_NAME}
+    command: [
+      '--wait_timeout=3600',
+      '--explicit_defaults_for_timestamp',
+    ]
+    volumes:
+      - /home/user/DB/${APP_NAME}/mysql:/var/lib/mysql
+    environment:
+      MYSQL_TCP_PORT: 5555
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: ${APP_NAME}
+    network_mode: host # port 5555

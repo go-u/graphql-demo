@@ -1,0 +1,8 @@
+---
+- name: ufw_incoming_default_deny
+  ufw:
+    direction: incoming
+    policy: deny
+    state: enabled
+  when: ufw_default_deny_incoming == True
+  become: yes

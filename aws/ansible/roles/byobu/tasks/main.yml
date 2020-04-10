@@ -1,0 +1,11 @@
+---
+- name: Install byobu
+  apt:
+    name: byobu
+    state: present
+  become: yes
+
+- name: byobu-enable
+  shell: 'bash -lc "byobu-enable"'
+  become: no
+

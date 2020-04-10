@@ -1,0 +1,21 @@
+---
+    - name: Add key NginX
+      apt_key:
+        url: https://nginx.org/keys/nginx_signing.key
+        state: present
+
+    # mainlineではなく、stable版を使用。uWSGIなどとの連携への悪影響を考えて
+    - name: Add repo NginX
+      apt_repository:
+        state: present
+        repo: '{{ item.repo }}'
+      with_items:
+      - repo: deb https://nginx.org/packages/ubuntu/ xenial nginx
+      - repo: deb-src https://nginx.org/packages/ubuntu/ xenial nginx
+
+    - name: Install NginX
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+

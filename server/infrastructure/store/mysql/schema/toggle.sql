@@ -1,0 +1,5 @@
+CREATE TABLE toggle
+(
+    uid        VARCHAR(128) CHARACTER SET ascii NOT NULL PRIMARY KEY,
+    enable     BOOLEAN NOT NULL
+);

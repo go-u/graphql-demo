@@ -1,0 +1,14 @@
+---
+- hosts: server
+  become: yes
+  vars:
+    # deploy
+    app_src: '{{ playbook_dir }}/../../'
+    app_dist: '/home/{{ ansible_user }}/app'
+    # service
+    compose_dir: '{{ app_dist }}/docker/prd/'
+    compose_status: 'restart' # up/restart
+
+  roles:
+    - deploy
+    - run_app

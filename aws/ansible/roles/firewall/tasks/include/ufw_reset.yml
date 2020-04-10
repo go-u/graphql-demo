@@ -1,0 +1,5 @@
+---
+- name: reset ufw setting
+  ufw:
+    state: reset
+  become: yes

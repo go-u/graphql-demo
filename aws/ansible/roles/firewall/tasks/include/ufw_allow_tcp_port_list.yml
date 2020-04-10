@@ -1,0 +1,9 @@
+---
+- name: ufw_allow_tcp_port_list
+  ufw:
+    state: enabled
+    rule: allow
+    proto: tcp
+    port: '{{ item }}'
+  with_items: '{{ ufw_allow_tcp_port_list }}'
+  become: yes

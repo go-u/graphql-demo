@@ -1,0 +1,9 @@
+# for test
+[mysql]
+  dbname  = "graph"
+  host    = "localhost"
+  port    = 5555
+  user    = "root"
+  pass    = "pass"
+  sslmode = "false"
+  no-auto-timestamps = "true"

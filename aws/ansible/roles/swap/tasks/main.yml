@@ -1,0 +1,30 @@
+---
+- block:
+    - name: check if swap file exists
+      stat:
+        path: "/etc/swapfile"
+      register: swap_file_check
+
+    - name: create swap file
+      command: "fallocate -l {{ swap_size }}G /etc/swapfile"
+      when: swap_file_check.stat.exists == false
+
+    - name: set permissions on swap file
+      file:
+        path: "/etc/swapfile"
+        mode: 0600
+
+    - name: format swap file
+      command: "mkswap /etc/swapfile"
+      when: swap_file_check.stat.exists == false
+
+    - name: add to fstab
+      lineinfile:
+        dest: /etc/fstab
+        regexp: "/etc/swapfile"
+        line: "/etc/swapfile none swap sw 0 0"
+
+    - name: turn on swap
+      command: "swapon -a"
+
+  become: yes

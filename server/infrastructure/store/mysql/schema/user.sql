@@ -1,0 +1,5 @@
+CREATE TABLE user
+(
+    uid        VARCHAR(128) CHARACTER SET ascii NOT NULL PRIMARY KEY,
+    created_at DATETIME NOT NULL
+);

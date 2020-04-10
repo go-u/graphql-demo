@@ -1,0 +1,9 @@
+---
+- name: Install packages
+  apt:
+    name: '{{ item.name }}'
+    state: present
+  with_items:
+    - name: build-essential
+  # - name: chrony
+  become: yes

@@ -1,0 +1,35 @@
+---
+- hosts: server
+  become: yes
+  vars:
+    # allocate disk swap as X GB
+    swap_size: 2
+
+    # firewall
+    ufw_allow_tcp_port_list: [22, 80] # Development
+    ufw_default_deny_incoming: True
+    ufw_default_deny_outgoing: False
+
+    # Nginx
+    listen_port: 80 # Enable SSL/443 with Cloud
+    api_proxy_port: 8081
+
+    # deploy
+    app_user: user # or {{ ansible_user }}
+    app_src: '{{ playbook_dir }}/../../'
+    app_dist: '/home/{{ app_user }}/app'
+
+    # service
+    compose_dir: '{{ app_dist }}/docker/prd/'
+    compose_status: 'up' # up/restart
+
+  roles:
+    - swap
+    - update
+    - firewall
+    - packages
+    - byobu
+    - docker
+    - nginx-golang-api
+    - deploy
+    - run_app

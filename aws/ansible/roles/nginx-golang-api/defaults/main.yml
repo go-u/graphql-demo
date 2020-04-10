@@ -1,0 +1,10 @@
+---
+nginx_conf_dir: /etc/nginx
+
+nginx_binary_name: "nginx" # nginx -t コマンドなどで使うpathの通ったバイナリ名
+nginx_service_name: "{{nginx_binary_name}}" # sudo nginx service restart などで使う、nginxのサービス名
+
+nginx_conf_user: root # teplatesコピー時のユーザ
+nginx_conf_group: root # teplatesコピー時のユーザ
+
+

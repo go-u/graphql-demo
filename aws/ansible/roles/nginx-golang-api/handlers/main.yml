@@ -1,0 +1,29 @@
+---
+- block:
+  - name: restart nginx
+    debug: msg="checking config first"
+    changed_when: True # 変更があったことにする(黄色)
+    notify:
+      - check nginx configuration
+      - restart nginx - after config check # nginxを以下のハンドラで再起動する
+
+  - name: reload nginx
+    debug: msg="checking config first"
+    changed_when: True
+    notify:
+      - check nginx configuration
+      - reload nginx - after config check # nginxを以下のハンドラでリロードする
+
+  - name: check nginx configuration
+    command: "{{ nginx_binary_name }} -t"
+    register: result # コマンドの実行結果をresultに格納
+    changed_when: "result.rc != 0" # 実行結果の終了コードが正常終了(=0)でなかった場合に、変更があったことにする
+    check_mode: no # dry-run, checkモードでも強制的に実行する
+
+  - name: restart nginx - after config check
+    service: name={{ nginx_service_name }} state=restarted
+
+  - name: reload nginx - after config check
+    service: name={{ nginx_service_name }} state=reloaded
+
+  become: yes

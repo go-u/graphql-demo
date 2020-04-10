@@ -1,0 +1,30 @@
+version: "3.1"
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    container_name: ${APP_NAME}
+    network_mode: host # port 5555
+    command: [
+      '--wait_timeout=3600',
+      '--explicit_defaults_for_timestamp',
+    ]
+    volumes:
+      - /home/user/DB/${APP_NAME}/mysql:/var/lib/mysql
+    environment:
+      MYSQL_TCP_PORT: 5555
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: ${APP_NAME}
+
+  golang:
+    image: golang:1.13-stretch
+    restart: always
+    command: go run main.go injector.go
+    network_mode: host
+    working_dir: /opt/app/server
+    volumes:
+      - /home/user/app/server:/opt/app/server
+    environment:
+      - GO111MODULE=on
+    depends_on:
+      - mysql

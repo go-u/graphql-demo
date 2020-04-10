@@ -1,0 +1,26 @@
+---
+- name: Copy the nginx configuration file
+  template:
+    src: nginx.conf.j2
+    dest: "{{ nginx_conf_dir }}/nginx.conf"
+    owner: "{{ nginx_conf_user }}" # defaultsにてroot指定
+    group: "{{ nginx_conf_group }}" # defaultsにてroot指定
+    mode: 0755
+  notify:
+    - restart nginx
+
+- name: conf.dフォルダに、api.confを作成
+  template:
+    src: "templates/conf.d/api.conf.j2"
+    dest: "{{ nginx_conf_dir }}/conf.d/api.conf"
+    owner: "{{ nginx_conf_user }}"
+    group: "{{ nginx_conf_group }}"
+    mode: 0755
+  notify:
+    - reload nginx
+
+- name: conf.dフォルダからdefault.confを削除
+  file:
+    path: "{{ nginx_conf_dir }}/conf.d/default.conf"
+    state: absent
+

@@ -1,0 +1,46 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Toggle {
+  id: ID!
+  enable: Boolean!
+  user: User!
+}
+
+type Todo {
+  id: ID!
+  text: String!
+  user: User!
+}
+
+type User {
+  uid: String!
+  createdAt: Int!
+  batchSize: Int # for confirm dataloder result
+}
+
+type Query {
+  todos: [Todo!]!
+  toggles: [Toggle!]! # dataloader demo
+  toggle: Toggle!
+}
+
+input NewTodo {
+  text: String!
+}
+
+input DeleteTodo {
+  id: Int!
+}
+
+input SwitchToggle {
+  enable: Boolean!
+}
+
+type Mutation {
+  createTodo(input: NewTodo!): Todo!
+  deleteTodo(input: DeleteTodo!): Todo!
+  switchToggle(input: SwitchToggle!): Toggle!
+  switchToggleFail(input: SwitchToggle!): Toggle!
+}

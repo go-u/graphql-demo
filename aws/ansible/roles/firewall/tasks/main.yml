@@ -1,0 +1,17 @@
+---
+- block:
+    - name: Install ufw
+      apt:
+        name: ufw
+        state: present
+
+    - name: reset ufw setting
+      include_tasks: "include/ufw_reset.yml"
+
+    - name: ufw default deny incoming
+      include_tasks: "include/ufw_default_deny_incoming.yml"
+
+    - name: ufw allow tcp port
+      include_tasks: "include/ufw_allow_tcp_port_list.yml"
+
+  become: yes
